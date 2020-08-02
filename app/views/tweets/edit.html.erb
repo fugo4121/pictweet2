@@ -1,0 +1,21 @@
+
+<%# フォームはnew.htmlと同じ %>
+
+<%# new.htmlとの違いは、コントローラーの@tweetにデータが入っているため、modelの取得HTTPメソッドが変わる %>
+<%# @tweetには選択した投稿データが入っているため、nameやtextに表示される %>
+
+<%# @tweetにデータが入っているため、modelにより、HTTPメソッドはupdateが自動的に選ばれる %>
+<%# #    PATCH  /tweets/:id(.:format)      tweets#update  サーバのデータをブラウザから送られたデータに置き換え %>
+<%# #    PUT    /tweets/:id(.:format)      tweets#update  更新・作成 %>
+
+<div class="contents row">
+  <div class="container">
+    <%= form_with(model: @tweet, local: true) do |form| %>
+      <h3>編集する</h3>
+      <%= form.text_field :name, placeholder: "Nickname" %>
+      <%= form.text_field :image, placeholder: "Image Url" %>
+      <%= form.text_area :text, placeholder: "text", rows: "10" %>
+      <%= form.submit "SEND" %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pictweet2</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <%# 全てのページのヘッダー部分のビュー(共通する箇所) %>
+  <body>
+    <header class="header">
+      <div class="header__bar row">
+        <%# pictweetをクリックしたら、index(ルート)に戻るように設定 %>
+        <h1 class="grid-6"><a href="/">PicTweet</a></h1>
+        <div class="user_nav grid-6">
+          <%# 投稿するをクリックしたら、投稿フォームのページに移動 %>
+          <a class="post" href="/tweets/new">投稿する</a>
+        </div>
+      </div>
+    </header>
+    <%# ここでそれぞれのページのビューを表示 %>
+      <%= yield %>
+    <footer>
+      <p>Copyright PicTweet 2019.</p>
+    </footer>
+  </body>
+</html>

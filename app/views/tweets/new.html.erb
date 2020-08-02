@@ -1,0 +1,31 @@
+<%# 新規投稿フォーム画面 %>
+
+<div class="contents row">
+  <div class="container">
+    <%# 対応するnewコントローラーで、@tweet = Tweet.new(レコード生成する処理)を加える事で、 %>
+    <%# form_withのmodelから自動で送信先のurlを指定する %>
+    <%# コントローラーで@tweetを空にしているのは、modelで@tweetが空かどうか判断している為 %>
+    <%# 基礎と同様に、フォームで入力したデータをパラメータとしてルーティングに送信 %>
+    <%# ルーティングのresourcesメソッドのcreateからコントローラーのcreateアクションが動く %>
+
+    <%# resources設定のPOSTを自動取得   POST  /tweets(.:format)  tweets#create %>
+
+
+    <%= form_with(model: @tweet, local: true) do |form| %>
+      <h3>投稿する</h3>
+      <%= form.text_field :name, placeholder: "Nickname" %>
+      <%= form.text_field :image, placeholder: "Image Url" %>
+      <%= form.text_area :text, placeholder: "text", rows: "10" %>
+
+      <%# 以下のものみたいに、tweetテーブルに指定したもの以外が送れてしまう為、ストロングパラメータで受け取るものを設定 %>
+      <%# form.text_field :pass, placeholder: "password" %>
+      <%= form.submit "SEND" %>
+    <% end %>
+
+    <%# 基礎では、newアクションでは何もせず、新規投稿の送信されたデータをルーティングで受け取り、 %>
+    <%# ルーティングよりコントローラーに送られたパラメータをcreateアクションのTweet.createで保存 %>
+
+    <%# form_with url: "/tweets", method: :post, local: true do |form| %>
+      <%# form.text_field :name %>
+      <%# form.submit '投稿する' %>
+    <%# end %>
