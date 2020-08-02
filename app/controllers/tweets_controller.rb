@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
 
-  # editとshowの、対象id投稿データを@tweetに入れる処理が同じため、まとめる
+  # editとshowのaaa、対象id投稿データを@tweetに入れる処理が同じため、まとめる
   before_action :set_tweet, only: [:edit, :show]
 
   def index
