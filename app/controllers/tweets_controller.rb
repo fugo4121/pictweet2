@@ -1,5 +1,6 @@
 class TweetsController < ApplicationController
-#lkjfdaj444443333hrtrwaaaa
+#lkjfdaj444443333hrtrwaaa
+# ver1
   # editとshowの、対象id投稿データを@tweetに入れる処理が同じため、まとめる
   before_action :set_tweet, only: [:edit, :show]
 
