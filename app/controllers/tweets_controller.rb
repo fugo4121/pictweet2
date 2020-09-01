@@ -1,5 +1,6 @@
 class TweetsController < ApplicationController
 
+#test
 
   # 該当アクションの時は、対象id投稿データを@tweetに入れる処理が同じため、まとめる
   # editとshowの、対象id投稿データを@tweetに入れる処理が同じため、まとめる
