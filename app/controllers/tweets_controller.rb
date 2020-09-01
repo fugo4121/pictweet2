@@ -1,6 +1,9 @@
 class TweetsController < ApplicationController
 
+
   # 該当アクションの時は、対象id投稿データを@tweetに入れる処理が同じため、まとめる
+  # editとshowの、対象id投稿データを@tweetに入れる処理が同じため、まとめる
+
   before_action :set_tweet, only: [:edit, :show]
   # 該当アクションの時は、未ログイン時にindexへリダイレクトするのを除外
   before_action :move_to_index, except: [:index, :show, :search]
