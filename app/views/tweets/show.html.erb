@@ -1,21 +1,70 @@
 
 <%# index.htmlとほとんど同じ(1idの投稿になり、詳細ボタンが消えた) %>
+<%# index.htmlと違ってeachメソッドを使用していないため、@必要 %>
+<%# コメント欄追加 %>
 
 <div class="contents row">
   <div class="content_post" style="background-image: url(<%= @tweet.image %>);">
-    <div class="more">
-      <span><%= image_tag 'arrow_top.png' %></span>
-      <ul class="more_list">
-        <li>
-          <%= link_to '編集', edit_tweet_path(@tweet.id), method: :get %>
-        </li>
-        <li>
-          <%= link_to '削除', tweet_path(@tweet.id), method: :delete %>
-        </li>
-      </ul>
-    </div>
+    <%# 「ユーザーがログインしている」かつ「投稿したユーザーである投稿だけに許可」の時のみ表示 %>
+    <% if user_signed_in? && current_user.id == @tweet.user_id %>
+      <div class="more">
+        <span><%= image_tag 'arrow_top.png' %></span>
+        <ul class="more_list">
+          <li>
+            <%= link_to '編集', edit_tweet_path(@tweet.id), method: :get %>
+          </li>
+          <li>
+            <%= link_to '削除', tweet_path(@tweet.id), method: :delete %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+    
     <p><%= @tweet.text %></p>
-    <span class="name"><%= @tweet.name %>
+
+    <span class="name">
+      <%# tweet.nameを使用しなくなったため、user.nicknameに変更し、マイページに遷移 %>
+      <%# a hrefにしている理由は、投稿者の後にnicknameをつけるのが困難なため %>
+      
+      <a href="/users/<%= @tweet.user.id %>">
+
+        <%# 下記のパス指定でも可能 %>
+        <%# <a href="<= user_path(@tweet.user.id) %>
+        <span>投稿者</span><%= @tweet.user.nickname %>
+      </a>
+
     </span>
   </div>
+
+  <div class="container">
+
+    <%# ユーザーがログインしていればコメントフォーム表示、していなければログイン喚起 %>
+    <%# 条件は、if user_signed_in?でも代用可能 %>
+    <% if current_user %>
+      <%# @commentのフォームでは、親となる@tweetも記述しないと、pathが見つからないエラーが発生する %>
+      <%= form_with(model: [@tweet, @comment], local: true) do |form| %>
+        <%= form.text_area :text, placeholder: "コメントする", rows: "2" %>
+        <%= form.submit "SEND" %>
+      <% end %>
+    <% else %>
+      <strong><p>※※※ コメントの投稿には新規登録/ログインが必要です ※※※</p></strong>
+    <% end %>
+
+    <div class="comments">
+      <h4>＜コメント一覧＞</h4>
+       <%# コメントの投稿者とコメントを表示 %>
+       <%# コメントが空でもエラーが起きないようにする %>
+       <%# 投稿者の名前をクリックすると、その投稿者のページに遷移 %>
+      <% if @comments %>
+        <% @comments.each do |comment| %>
+          <p>
+            <strong><%= link_to comment.user.nickname, "/users/#{comment.user_id}" %>：</strong>
+            <%= comment.text %>
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+
 </div>

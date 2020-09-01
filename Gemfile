@@ -55,3 +55,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # 2 デバッグ用ファイル追加
 gem 'pry-rails'
+gem 'devise'

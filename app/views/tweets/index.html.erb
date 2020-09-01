@@ -1,40 +1,21 @@
 
 <div class="contents row">
+
+<%# 検索用欄と検索ボタン追加 %>
+<%# ルーティングでsearchアクションを設定することで、「url: search_tweets_path」を有効にする %>
+<%= form_with(url: search_tweets_path, local: true, method: :get, class: "search-form") do |form| %>
+  <%= form.text_field :keyword, placeholder: "投稿を検索する", class: "search-input" %>
+  <%= form.submit "検索", class: "search-btn" %>
+<% end %>
+
  <%# eachメソッドにより、tweetテーブルをレコード単位で表示 %>
  <%# 各表示場所は、別途カリキュラムより保存したcssにより設定 %>
   <% @tweets.each do |tweet| %>
 
-    <%# divのブロックレベル要素に背景の設定をし、テーブルの写真を表示 %>
-    <div class="content_post" style="background-image: url(<%= tweet.image %>);">
-      
-      <%# 編集・削除など、投稿記事にリストボタン表示 %>
-      <div class="more">
-        <span><%= image_tag 'arrow_top.png' %></span>
-        <ul class="more_list">
-          <li>
-            <%= link_to '詳細', tweet_path(tweet.id), method: :get %>
-          </li>
-        <li>
-          <%# 取得したidの投稿を表示させる %>
-          <%# editコントローラーに対象id投稿データを送り、フォームで表示させて編集できるようにする %>
-          <%= link_to '編集', edit_tweet_path(tweet.id), method: :get %>
-        </li>
-        <li>
-          <%# eachメソッドにより、順番に投稿された記事のidを取得して、リンク先の投稿を削除対象にする %>
-          <%# <%= link_to '削除', "/tweets/#{tweet.id}", method: :delete %> 
+    <%# 「_tweet.html.erb」の呼び出し、呼び出し先のtweetに、eachメソッドのtweetを代入 %>
+    <%= render partial: "tweet", locals: { tweet: tweet } %>
 
-          <%# tweet  DELETE /tweets/:id(.:format)    tweets#destroy %>
-          <%# Prefixで表現する  prefix_path 式展開の{}が()になるので注意 %>
-          
-          <%= link_to '削除', tweet_path(tweet.id), method: :delete %>
-        </li>
-      </div>
-
-      <%# 写真の中に題名をいれる %>
-      <p><%= tweet.text %></p>
-
-      <%# 写真の中に名前をいれる %>
-      <span class="name"><%= tweet.name %></span>
-    </div>
   <% end %>
 </div>
+
+

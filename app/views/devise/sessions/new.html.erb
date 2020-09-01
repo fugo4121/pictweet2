@@ -1,0 +1,32 @@
+<div class="contents row">
+  <div class="container">
+    <h2>Log in</h2>
+
+    <%= form_with model: @user, url: user_session_path, id: 'new_user', class: 'new_user', local: true do |f| %>
+
+      <div class="field">
+        <%# Email、ページ読み込み時、フォーカスをこの欄に持ってくる %>
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true %>
+      </div>
+
+      <div class="field">
+        <%# パスワード、自動入力補完(2回目以降、1回目に入力したデータを補完し自動的に反映)をoff %>
+        <%= f.label :password %><br />
+        <%= f.password_field :password, autocomplete: "off" %>
+      </div>
+
+      <%# 次回、ブラウザを閉じてもログイン情報を保管し自動ログインを行うチェックボックス %>
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          <%= f.label :remember_me %><br />
+          <%= f.check_box :remember_me %>
+        </div>
+      <% end %>
+
+      <div class="actions">
+        <%= f.submit "Log in" %>
+      </div>
+    <% end %>
+  </div>
+</div>

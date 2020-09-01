@@ -1,0 +1,21 @@
+
+<%# マイページ→ログイン中のユーザーのツイート一覧表示 %>
+
+<div class="contents row">
+  <p><%= @nickname %>さんの投稿一覧</p>
+
+  <% @tweets.each do |tweet| %>
+
+  <%# 「_tweet.html.erb」の呼び出し、呼び出し先のtweetに、eachメソッドのtweetを代入 %>
+  <%# usersフォルダ内にtweetsフォルダのerbを呼び出ししているため、「tweets/」を加える %>
+  <%# 元々のコードになかった、詳細〜削除リストなども反映 %>
+    <%= render partial: "tweets/tweet", locals: { tweet: tweet } %>
+
+    <%# 以下、元々のコード %>
+    <%#div class="content_post" style="background-image: url(<%= tweet.image >);"> %>
+      <%# <p><%= tweet.text ></p> %>
+      <%# 投稿者をuserテーブルのnicknameで管理するようになったため、tweetのnameが不要となる %>
+    <%# <div> %>
+
+  <% end %>
+</div>

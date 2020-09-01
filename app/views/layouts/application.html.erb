@@ -14,10 +14,34 @@
       <div class="header__bar row">
         <%# pictweetをクリックしたら、index(ルート)に戻るように設定 %>
         <h1 class="grid-6"><a href="/">PicTweet</a></h1>
-        <div class="user_nav grid-6">
-          <%# 投稿するをクリックしたら、投稿フォームのページに移動 %>
-          <a class="post" href="/tweets/new">投稿する</a>
-        </div>
+
+        <%# 投稿するボタンがあった箇所に、ログインしている時、していない時で表示ボタンを分ける %>
+        <%# user_signed_in?メソッドは、ユーザーがログインしていればtrueを、ログアウト状態であればfalseを返す %>
+        <% if user_signed_in? %>
+          <div class="user_nav grid-6">
+
+          <%# ヘッダーにニックネームを表示し、カーソルを合わせるとリスト表示 %>
+          <span><%= current_user.nickname %>
+            <ul class="user__info">
+              <li>
+                <%= link_to "マイページ", "/users/#{current_user.id}" %>
+                <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+              </li>
+            </ul>
+          </span>
+          <%= link_to "投稿する", new_tweet_path, class: "post" %>
+          
+          </div>
+        <% else %>
+          <div class="grid-6">
+            <%= link_to "ログイン", new_user_session_path, class: "post" %>
+            <%= link_to "新規登録", new_user_registration_path, class: "post" %>
+          </div>
+        <% end %>
+
+        <%# 投稿するをクリックしたら、投稿フォームのページに移動 %>
+        <%# <a class="post" href="/tweets/new">投稿する</a> %>
+        
       </div>
     </header>
     <%# ここでそれぞれのページのビューを表示 %>
